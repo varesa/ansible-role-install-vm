@@ -10,11 +10,14 @@
 - name: Create VM
   delegate_to: localhost
   command: 
-    argv:
-    - "{{ role_path }}/script/install.sh"
-    - "{{ vm_source_image }}"
-    - "{{ inventory_hostname }}"
-    - "{{ vm_portgroup }}"
-    - "{{ vm_ip_address }}"
-    - "{{ vm_gateway_address }}"
+    cmd: >-
+     {{ role_path }}/script/install.sh
+     {{ vm_source_image }}
+     {{ inventory_hostname }}
+     {{ vm_portgroup }}
+     {{ vm_ip_address }}
+     {{ vm_gateway_address }}
+     {{ vm_cpus if vm_cpus is defined else '' }}
+     {{ vm_memory if vm_memory is defined else '' }}
+     
   when: vm_exists.rc == 1
